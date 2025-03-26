@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/EduShare.iml" filepath="$PROJECT_DIR$/.idea/EduShare.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/identity-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/identity-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/profile-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/profile-service.main.iml" />
     </modules>
   </component>
 </project>

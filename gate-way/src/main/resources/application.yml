@@ -1,0 +1,38 @@
+server:
+  port: 8083
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: profile_service_route
+          predicates:
+            - Path=/api/v1/profiles/**
+          uri: http://localhost:8081
+          # New route for Profile Service Swagger docs
+        - id: profile_service_swagger_route
+          predicates:
+            - Path=/profile/v3/api-docs/**
+          uri: http://localhost:8081
+        # New route for Identity Service Swagger docs
+        - id: identity_service_swagger_route
+          predicates:
+            - Path=/identity/v3/api-docs/**
+          uri: http://localhost:8080
+    config:
+      enabled: false
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - name: gateway-service
+        url: /v3/api-docs
+
+      - name: profile-service-docs
+        url: /profile/v3/api-docs
+
+      - name: identity-service-docs
+        url: /identity/v3/api-docs
