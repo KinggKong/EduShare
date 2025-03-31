@@ -7,19 +7,34 @@ spring:
         - id: profile_service_route
           predicates:
             - Path=/api/v1/profiles/**
-          uri: http://localhost:8081
-          # New route for Profile Service Swagger docs
+          uri: lb://profile-service
+        - id: identity_service_route
+          predicates:
+            - Path=/api/v1/auth/**
+          uri: lb://identity-service
         - id: profile_service_swagger_route
           predicates:
             - Path=/profile/v3/api-docs/**
-          uri: http://localhost:8081
-        # New route for Identity Service Swagger docs
+          uri: lb://profile-service
         - id: identity_service_swagger_route
           predicates:
             - Path=/identity/v3/api-docs/**
-          uri: http://localhost:8080
+          uri: lb://identity-service
+      discovery:
+        locator:
+          enabled: true  # Tùy chọn: tự động khám phá service
+          lower-case-service-id: true  # Tùy chọn: chuyển tên service về chữ thường
     config:
       enabled: false
+  application:
+    name: gateway-service  # Đặt tên cho Gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/  # Địa chỉ Eureka Server
+    enabled: true  # Bật Eureka Client
+  instance:
+    hostname: localhost
 springdoc:
   api-docs:
     enabled: true
@@ -30,9 +45,12 @@ springdoc:
     urls:
       - name: gateway-service
         url: /v3/api-docs
-
       - name: profile-service-docs
         url: /profile/v3/api-docs
-
       - name: identity-service-docs
         url: /identity/v3/api-docs
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: DEBUG
